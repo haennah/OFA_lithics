@@ -7,7 +7,7 @@ The study was conducted between October 2022 and May 2023 in the TraCEr laborato
 All data was collected by Hannah Rausch (Uni Münster) with the exception of the data from sample FLT8-1 which was collected by Lisa Schunk (TraCEr). Additional collaboratos include Ottmar Kuller (Senckenberg Frankfurt), Joao Marreiros (TraCEr), Walter Gneisinger (TraCEr) and Ivan Calandra (IMPALA).
 
 The entire data set contains 7 data objects listed with the letters a through g. 
-This GitHub reposotory contains the first five objects (a, b, c, d, e):
+This GitHub repository contains the first five objects (a, b, c, d, e):
 
 - a_raw_data_smarttester
   - Sensor data collected during experimentation with the material SMARTTESTER® from the company Inotec. The data was exported from the computer of the SMARTTESTER® after experimentation.
