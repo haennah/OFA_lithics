@@ -29,6 +29,6 @@ The reposotory contains the following files/folders:
 - e_descriptivestats_smarttester_stepmm
   - A TXT file containing the output of the descriptive statistics (hmisc v. 5.0-1) of data_smarttester_stepmm.xlsx.
 
-The remaining data which includes OFA- and ZenConnect projects is available on zenedo: 
+The remaining data which includes OFA- and ZenConnect projects are available on zenedo: 
 
 *** End of README ***
