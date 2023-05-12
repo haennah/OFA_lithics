@@ -9,6 +9,8 @@ All data was collected by Hannah Rausch (Uni Münster) with the exception of the
 The reposotory contains the following files/folders:
 
 - output_data_smarttester_plots
+  - Sensor data graphs (PDFs) of the variables depth (of the sample [mm], force [N], friction [N], and velocity [mm/s] for each smaple.
+  - The data data_smarttester_stepmm.xlsx was analysed using the data_analysis_smarttester_step.R script.
 
 - raw_data_smarttester
   - Sensor data collected during experimentation with the material SMARTTESTER® from the company Inotec. The data was exported from the computer of the SMARTTESTER® after experimentation.
@@ -25,3 +27,8 @@ The reposotory contains the following files/folders:
   - The file contains sample ID, angle of the edge, raw material, stroke number, step (the position of the sample holder in [mm] along the unilinear stroke; derived from the absolute position), force [N],    friction [N], depth (of the sample) [mm], position (of the sample holder; absolute position) [mm] and velocity [mm/s].
 
 - descriptivestats_smarttester_stepmm
+  - A TXT file containing the output of the descriptive statistics of data_smarttester_stepmm.xlsx.
+
+The remaining data which includes OFA- and ZenConnect projects is available on zenedo: 
+
+*** End of README ***
