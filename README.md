@@ -7,16 +7,21 @@ The study was conducted between October 2022 and May 2023 in the TraCEr laborato
 All data was collected by Hannah Rausch (Uni Münster) with the exception of the data from sample FLT8-1 which was collected by Lisa Schunk (TraCEr). Additional collaboratos include Ottmar Kuller (Senckenberg Frankfurt), Joao Marreiros (TraCEr), Walter Gneisinger (TraCEr) and Ivan Calandra (IMPALA).
 
 The reposotory contains the following files/folders:
-output_data_smarttester_plots
--
-raw_data_smarttester
-- Sensor data collected during experimentation with the material SMARTTESTER® from the company Inotec. The data was exported from the computer of the SMARTTESTER® after experimentation.
-- Each folder contains five CSV files with data on depth (of the sample) [mm], force [N], friction [N], position (of the sample holder) [mm] and velocity [mm/s].
-data_analysis_smarttester_stepmm.R
-- R-script for analysis of the data_smarttester_stepmm.xlsx.
-- The script contains 
-data_smarttester_stepmm.xlsx
-- Merged sensor data for all samples in a XLSX file.
-- The file contains sample ID, angle of the edge, raw material, stroke number, step (the position of the sample holder in [mm] along the unilinear stroke; derived from the absolute position), force [N], friction [N], depth (of the sample) [mm], position (of the sample holder; absolute position) [mm] and velocity [mm/s].
-descriptivestats_smarttester_stepmm
--
+
+- output_data_smarttester_plots
+
+- raw_data_smarttester
+  - Sensor data collected during experimentation with the material SMARTTESTER® from the company Inotec. The data was exported from the computer of the SMARTTESTER® after experimentation.
+  - Each folder contains five CSV files with data on depth (of the sample) [mm], force [N], friction [N], position (of the sample holder) [mm] and velocity [mm/s].
+
+- data_analysis_smarttester_stepmm.R
+  - R-script for analysis of the data_smarttester_stepmm.xlsx.
+  - The freeware R-Studio (version 2022.12.0+353, Posit Software, PBC) was used for analysis.
+  - The script was adapted from Ivan Calandra and Lisa Schunk (https://github.com/lschunk/PastHuman_StoneToolPerformance/blob/main/analysis_ST/scripts/Plots_TFE-Inotec.Rmd).
+  - The script contains commands for creating line graphs (tidyverse v. 1.3.2, R.utils v. 2.12.2, openxlsx 4.2.5, tools 4.2.2, patchwork v. 1.1.2, doBy v. 4.6.16, ggrepel v. 0.9.2 and ggplot2 v. 3.4.0) and generating descriptive statistics (hmisc v. 5.0-1).
+
+- data_smarttester_stepmm.xlsx
+  - Merged sensor data for all samples in a XLSX file.
+  - The file contains sample ID, angle of the edge, raw material, stroke number, step (the position of the sample holder in [mm] along the unilinear stroke; derived from the absolute position), force [N],    friction [N], depth (of the sample) [mm], position (of the sample holder; absolute position) [mm] and velocity [mm/s].
+
+- descriptivestats_smarttester_stepmm
