@@ -31,7 +31,9 @@ This GitHub repository contains the first 6 objects (a, b, c, d, e, f):
   - A TXT file containing the output of the descriptive statistics (hmisc v. 5.0-1) of data_smarttester_stepmm.xlsx.
 
 - f_OFA_graphs
-  - Graphs on surface area throughout the simulated trajectory in OFA. Since the axes are too small to see, they can only be retrieved in the correspoding OFA project via the diagramm tab. If there are questions on this point, please do not hesitate to contact me.
+  - Graphs on surface area throughout the simulated trajectory in OFA. Since the axes are too small to see, they can only be retrieved in the correspoding OFA project via the diagramm tab. The red graph shows the surface area of the tool sample and black shows the surface area of the contact material. 
+
+If there are any questions, please do not hesitate to contact me.
 
 The remaining data objects including OFA- and ZENConnect projects are available on zenedo: 
 
