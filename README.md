@@ -6,8 +6,8 @@ Details on the methodology can be accessed with the following link:
 The study was conducted between October 2022 and May 2023 in the TraCEr laboratory, MONREPOS, Neuwied (LEIZA).
 All data was collected by Hannah Rausch (Uni Münster) with the exception of the data from sample FLT8-1 which was collected by Lisa Schunk (TraCEr). Additional collaborators include Ottmar Kullmer (Senckenberg Frankfurt), Joao Marreiros (TraCEr), Walter Gneisinger (TraCEr) and Ivan Calandra (IMPALA).
 
-The entire data set contains 8 data objects listed with the letters a through h. 
-This GitHub repository contains the first 6 objects (a, b, c, d, e, f):
+The entire data set contains 7 data objects listed with the letters a through h. 
+This GitHub repository contains the first 5 objects (a, b, c, d, e):
 
 - a_raw_data_smarttester
   - Sensor data collected during experimentation with the material SMARTTESTER® from the company Inotec. The data was exported from the computer of the SMARTTESTER® after experimentation.
@@ -30,9 +30,6 @@ This GitHub repository contains the first 6 objects (a, b, c, d, e, f):
 - e_descriptivestats_smarttester_stepmm
   - A TXT file containing the output of the descriptive statistics (hmisc v. 5.0-1) of data_smarttester_stepmm.xlsx.
 
-- f_OFA_graphs
-  - Graphs on surface area throughout the simulated trajectory in OFA. Since the axis labels are too small to see, they can only be retrieved in the correspoding OFA project via the diagramm tab. The red graph shows the surface area of the tool sample and black shows the surface area of the contact material. 
-
-The remaining data objects including OFA- and ZENConnect projects are available on zenedo: 
+The remaining data objects (f, g) including OFA- and ZENConnect projects are available on zenedo: 
 
 *** End of README ***
