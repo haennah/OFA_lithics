@@ -6,8 +6,8 @@ Details on the methodology can be accessed with the following link:
 The study was conducted between October 2022 and May 2023 in the TraCEr laboratory, MONREPOS, Neuwied (LEIZA).
 All data was collected by Hannah Rausch (Uni Münster) with the exception of the data from sample FLT8-1 which was collected by Lisa Schunk (TraCEr). Additional collaborators include Ottmar Kullmer (Senckenberg Frankfurt), Joao Marreiros (TraCEr), Walter Gneisinger (TraCEr) and Ivan Calandra (IMPALA).
 
-The entire data set contains 7 data objects listed with the letters a through g. 
-This GitHub repository contains the first five objects (a, b, c, d, e):
+The entire data set contains 8 data objects listed with the letters a through h. 
+This GitHub repository contains the first 6 objects (a, b, c, d, e, f):
 
 - a_raw_data_smarttester
   - Sensor data collected during experimentation with the material SMARTTESTER® from the company Inotec. The data was exported from the computer of the SMARTTESTER® after experimentation.
@@ -30,6 +30,8 @@ This GitHub repository contains the first five objects (a, b, c, d, e):
 - e_descriptivestats_smarttester_stepmm
   - A TXT file containing the output of the descriptive statistics (hmisc v. 5.0-1) of data_smarttester_stepmm.xlsx.
 
-The remaining data objects including (f)OFA- and (g)ZENConnect projects are available on zenedo: 
+-f_
+
+The remaining data objects including OFA- and ZENConnect projects are available on zenedo: 
 
 *** End of README ***
