@@ -30,6 +30,6 @@ This GitHub repository contains the first 5 objects (a, b, c, d, e):
 - e_descriptivestats_smarttester_stepmm
   - A TXT file containing the output of the descriptive statistics (hmisc v. 5.0-1) of data_smarttester_stepmm.xlsx.
 
-The remaining data objects (f, g) including OFA- and ZENConnect projects are available on zenedo: https://github.com/haennah/OFA_lithics
+The remaining data objects (f, g) including OFA- and ZENConnect projects are available on zenedo: 10.5281/zenodo.7930863 
 
 *** End of README ***
