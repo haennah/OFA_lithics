@@ -1,5 +1,5 @@
 # OFA_lithics
-Occlusal Fingerprint Analysis (OFA) was applied to four sets of experimental stone tool samples in a pilot study.
+Occlusal Fingerprint Analysis (OFA) was applied to four sets of experimental stone tool samples and contact materials in a pilot study.
 Details on the methodology can be accessed with the following link: 
 
 
