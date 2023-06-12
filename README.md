@@ -24,7 +24,7 @@ This GitHub repository contains the first 5 objects (a, b, c, d, e):
   - The script contains commands for creating line graphs (tidyverse v. 1.3.2, R.utils v. 2.12.2, openxlsx 4.2.5, tools 4.2.2, patchwork v. 1.1.2, doBy v. 4.6.16, ggrepel v. 0.9.2 and ggplot2 v. 3.4.0) and generating descriptive statistics (hmisc v. 5.0-1).
 
 - d_output_data_smarttester_plots
-  - Sensor data graphs (PDFs) of the variables depth (of the sample [mm], force [N], friction [N], and velocity [mm/s] for each smaple.
+  - Sensor data graphs (PDFs) of the variables depth [mm], force [N], friction [N], and velocity [mm/s] for each smaple.
   - The data data_smarttester_stepmm.xlsx was analysed using the data_analysis_smarttester_step.R script.
 
 - e_descriptivestats_smarttester_stepmm
