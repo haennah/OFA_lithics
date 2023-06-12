@@ -11,7 +11,7 @@ This GitHub repository contains the first 5 objects (a, b, c, d, e):
 
 - a_raw_data_smarttester
   - Sensor data collected during experimentation with the material SMARTTESTER® from the company Inotec. The data was exported from the computer of the SMARTTESTER® after experimentation.
-  - Each folder contains five CSV files with data on depth (of the sample) [mm], force [N], friction [N], position (of the sample holder) [mm] and velocity [mm/s].
+  - Each folder contains five CSV files with data on depth [mm], force [N], friction [N], position [mm] and velocity [mm/s].
 
 - b_data_smarttester_stepmm.xlsx
   - Merged sensor data for all samples in a XLSX file.
