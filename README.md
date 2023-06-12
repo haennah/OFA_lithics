@@ -15,7 +15,7 @@ This GitHub repository contains the first 5 objects (a, b, c, d, e):
 
 - b_data_smarttester_stepmm.xlsx
   - Merged sensor data for all samples in a XLSX file.
-  - The file contains sample ID, angle of the edge, raw material, stroke number, step (the position of the sample holder in [mm] along the unilinear stroke; derived from the absolute position), force [N],    friction [N], depth (of the sample) [mm], position (of the sample holder; absolute position) [mm] and velocity [mm/s].
+  - The file contains data on sample ID, angle of the edge, raw material, stroke number, step (the position of the sample holder in [mm] along the unilinear stroke; derived from the absolute position), force [N],    friction [N], depth [mm], position (of the sample holder; absolute position) [mm] and velocity [mm/s].
 
 - c_data_analysis_smarttester_stepmm.R
   - R-script for analysis of the data_smarttester_stepmm.xlsx.
