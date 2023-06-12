@@ -1,6 +1,6 @@
 # OFA_lithics
 Occlusal Fingerprint Analysis (OFA) was applied to four sets of experimental stone tool samples and contact materials in a pilot study.
-Details on the methodology can be accessed with the following link:
+Details on the methodology can be accessed with the following link: https://www.protocols.io/private/4982678744C711EDB1E40A58A9FEAC02
 
 
 The study was conducted between October 2022 and May 2023 in the TraCEr laboratory, MONREPOS, Neuwied (LEIZA).
