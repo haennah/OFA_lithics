@@ -26,12 +26,15 @@ knitr::opts_chunk$set(comment = NA, message = FALSE, indent = "", error = TRUE)
 ---
 
 # Goal of the script
-Data analysis of SMARTTESTER sensor data
+Analysis of the SMARTTESTER sensor data containing the parameters depth, force, friction and velocity.
+This is achieved by creating line graphs displaying the data of each parameter for each of the four samples.
+Additionally, descriptive statistics of each parameter for each sample is retrieved.
+A bibliography of the R packages used is found at the end of the script.
 
 
 ```{r}
 dir_in <- "a_raw_data_smarttester"
-dir_out <- "d_output_data_smarttester"
+dir_out <- "b_output_data_smarttester"
 ```
 
 Raw data must be located in `r paste0("~/", dir_in)`.  
@@ -65,27 +68,26 @@ The imported file is: "`r paste0("~/", data_file)`"
 
 ---
 
-# Plot each of the selected numeric variable 
-## Plots showing the strokes as lines 
+# Plot the sensor data of each parameter with strokes as line graphs
 ```{r}
-# split the data in the individual 4 samples
+# Split the data into the individual 4 samples.
 sp <- split(imp_data, imp_data[["Sample"]])
 str(sp)
 
-# select parameters to plot
+# Select parameters to plot.
 y_var <- c("Force", "Friction", "Depth", "Velocity")
 
-# Plot every 40th stroke
+# Plot every 40th stroke.
 for (i in seq_along(sp)) {
-  # create a sequence of every 40th stroke, always including the first and the last strokes
+  # Create a sequence of every 40th stroke per sample that includes the first and the last strokes.
    seq_st <- seq(1, length(unique(sp[[i]][["Stroke"]])), by = 40) %>% 
     c(max(unique(sp[[i]][["Stroke"]])))
   
-  #
+  # Create a subset of every 40th stroke and a subset of the first 50 strokes per sample.
   dat_i_40th <- filter(sp[[i]], Stroke %in% seq_st)
   dat_i_50 <- filter(sp[[i]], Stroke %in% 1:50)
   
-  # Pivot to longer format for facet plots
+  # Pivot to longer format for facet plots.
   data_long_40th <- select(dat_i_40th, all_of(c("Relative_pos", y_var, "Stroke"))) %>%
              pivot_longer(all_of(y_var), names_to = "parameter", values_to = "value")
   str(data_long_40th)
@@ -93,40 +95,39 @@ for (i in seq_along(sp)) {
              pivot_longer(all_of(y_var), names_to = "parameter", values_to = "value") 
   str(data_long_50)
   
-  # Axes labels with units
+  # Create axes labels with units.
   param.labs <- c("Force [N]", "Friction [N]", "Depth [mm]", "Velocity [mm/s]")
   names(param.labs) <- y_var
     
   # Plot
   p1 <- ggplot(data = data_long_40th, aes(x = Relative_pos, y = value, color = Stroke)) +
     geom_line(aes(group = Stroke), alpha = 0.3) + 
-    # Wrap around parameters with free y-scales
+    # Wrap around parameters with free y-scales.
     facet_wrap(~ parameter, scales = "free_y", ncol = 1, labeller = labeller(parameter = param.labs)) +
-    
     labs(x = "Distance [mm]", y = NULL) +
-    # reverse the legend starting with 0 going to 2000 strokes    
+    # Reverse the legend starting with 0 going to 2000 strokes.
     scale_color_viridis(trans = "reverse") + 
-    # change the 'Step-number' in the x-legend  
+    # Change the 'Distance [mm]' in the x-legend.
     scale_x_continuous(breaks=c(0, 35, 70, 105, 140)) +
-    theme_classic()
+    theme_minimal()
   
-  # plot only the first 50 strokes per sample  
+  # Plot only the first 50 strokes per sample.
   p2 <- ggplot(data = data_long_50, aes(x = Relative_pos, y = value, color = Stroke)) +
     geom_line(aes(group = Stroke), alpha = 0.3) + 
-    # Wrap around parameters with free y-scales
+    # Wrap around parameters with free y-scales.
     facet_wrap(~ parameter, scales = "free_y", ncol = 1, labeller = labeller(parameter = param.labs)) +
     
     labs(x = "Distance [mm]", y = NULL) +
-    # reverse the legend starting with 0 going to 2000 strokes    
+    # Reverse the legend to start with 0 and reach 2000 strokes.  
     scale_color_viridis(trans = "reverse") + 
-    # change the 'Step-number' in the x-legend  
+    # Change the 'Distance [mm]' in the x-legend.
     scale_x_continuous(breaks=c(0, 35, 70, 105, 140)) +
-    theme_classic()
+    theme_minimal()
 
-  # patchwork plot
+  # Patchwork the plot.
   p <- p2 + p1 + plot_annotation(title = names(sp)[i]) 
   print(p)
-  # save to PDF
+  # Save the plot as a PDF.
   file_out <- paste0(file_path_sans_ext(basename(data_file)), "_plot_", names(sp)[i], ".pdf") %>%
     gsub("b_", "d_", .)
   ggsave(filename = file_out, plot = p, path = dir_out, device = "pdf")
@@ -136,7 +137,7 @@ for (i in seq_along(sp)) {
 ---
 
 # Descriptive statistics
-## Create function to compute the statistics at once
+## Create function to compute the statistics in bulk
 ```{r Function}
 NMinMaxMeanMedSd <- function(x){
   y <- x[!is.na(x)]     # Exclude NAs
@@ -155,8 +156,8 @@ N.distinct <- function(x){
   n_test <- length(y)   # Sample size (n)
   unique_test <- length(unique(y)) # Number of unique values
   out <- c(n_test, unique_test) # Concatenate
-  names(out) <- c("n", "distinct")         # Name values
-  return(out)                                                        # Object to return
+  names(out) <- c("n", "distinct")# Name values
+  return(out)           # Object to return
 }
 ```
 
@@ -171,7 +172,7 @@ stroke_stats
 ## Export statistics
 ```{r}
 write.xlsx(list(Stroke = stroke_stats, Parameters = all_stats), 
-           file = paste0(dir_out, "/d_descriptivestats_smarttester_stepmm.xlsx"))
+           file = paste0(dir_out, "/descriptivestats_smarttester_stepmm.xlsx"))
 ```
 
 ---
