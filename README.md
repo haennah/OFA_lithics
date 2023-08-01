@@ -26,6 +26,5 @@ References in the script and in the bibliography file grateful-refs.bib were gen
 
 The remaining data objects (d, e) including OFA- and ZENConnect projects are available on zenodo: 10.5281/zenodo.7930863
 
-The entire data set contains 5 data files listed with the letters a through e. 
 
 *** End of README ***
