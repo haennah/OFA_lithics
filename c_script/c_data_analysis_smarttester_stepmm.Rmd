@@ -1,0 +1,249 @@
+---
+title: "Data Analysis SMARTTESTER®"
+author: "Hannah Rausch (adapted from Ivan Calandra & Lisa Schunk)"
+date: "`r format(Sys.time(), usetz = TRUE)`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: cerulean
+    highlight: pygments
+    number_sections: true
+  github_document: 
+    toc: true
+    toc_depth: 3
+    html_preview: false
+bibliography: grateful-refs.bib
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_format = "all", knit_root_dir = rprojroot::find_rstudio_root_file()) })
+---
+
+```{r Knitr Options, include = FALSE}
+knitr::opts_chunk$set(comment = NA, message = FALSE, indent = "", error = TRUE)
+```
+
+---
+
+# Goal of the script
+Analysis of the SMARTTESTER sensor data containing the parameters depth, force, friction and velocity.
+This is achieved by creating line graphs displaying the data of each parameter for each of the four samples.
+Additionally, descriptive statistics of each parameter for each sample is retrieved.
+A bibliography of the R packages used is found at the end of the script.
+
+```{r}
+dir_in <- "a_raw_data_smarttester"
+dir_out <- "b_output_data_smarttester"
+```
+
+Raw data must be located in `r paste0("~/", dir_in)`.  
+Formatted data will be saved in `r paste0("~/", dir_out)`.
+The knit directory for this script is the project directory.
+
+---
+
+# Load packages
+```{r}
+pack_to_load <- c("tidyverse", "R.utils", "openxlsx", "tools", "patchwork", "doBy", "ggplot2", "grateful", "viridis")
+sapply(pack_to_load, library, character.only = TRUE, logical.return = TRUE) 
+```
+
+---
+
+# Get name, path and information of the file
+```{r}
+data_file <- list.files(dir_in, pattern = "\\.xlsx$", full.names = TRUE)
+data_file
+```
+
+
+# Load data into R object
+
+```{r}
+imp_data <- read.xlsx(data_file)
+str(imp_data)
+```
+
+The imported file is: "`r paste0("~/", data_file)`"  
+
+---
+
+# Calculate new parameters
+## Relative depth
+The lower the recorded value for `Depth`, the deeper the tool has penetrated into the contact material. This scale is not intuitive on a plot, so we decided to calculate the relative depth.  
+
+For `Sample` s, the relative depth at `Stroke` i & `Step` j is then defined as the `Depth` at `Stroke` i and `Step` j minus the maximum depth across all strokes:  
+$Rel.Depth_{s,i,j} = Depth_{s,i,j} - Max.depth_s$  
+
+```{r}
+imp_data <- imp_data %>% 
+            group_by(Sample) %>% 
+            mutate(Rel.Depth = Depth - max(Depth, na.rm = TRUE))
+```
+
+With this calculation, the scale of the `Rel.Depth` parameter is in a more intuitive way on a plot: lower (negative) values indicate deeper penetration.  
+```{r}
+head(select(imp_data, Sample, Stroke, Step, Depth, Rel.Depth), n = 10L)
+```
+
+While the maximum depth should theoretically be at the beginning of the experiment (Stroke 1 & Step 1) for each sample, it is not the case. This is why we chose the maximum recorded `Depth` per sample ($Max.depth_s$ ), rather than the first `Depth` measurement, as the reference for the relative depth on each sample.  
+The maximum depth for each sample has been recorded at these strokes and steps:
+```{r}
+imp_data %>% group_by(Sample) %>% slice_max(Depth)
+```
+
+## Relative position
+The `Position` value along the X axis is recorded across each stroke at 10 Hz (i.e. 10 readings per second). Due to inaccuracies, the absolute X position at each `Step` might slightly differ from one stroke to another. Additionally, the starting position is not 0. We therefore calculate here the relative position.
+
+For `Sample` s and `Stroke` i, the relative position at `Step` j is then defined as the `Position` at `Step` j minus the `Position` at `Step` 1:  
+$Rel.Position_{s,i,j} = Position_{s,i,j} - Position_{s,i,1}$  
+
+```{r}
+imp_data <- imp_data %>% 
+            group_by(Sample, Stroke) %>% 
+            mutate(Rel.Position = Position - Position[1])
+head(select(imp_data, Sample, Stroke, Step, Position, Rel.Position), n = 10L)
+```
+
+## Check results
+```{r}
+imp_data <- as.data.frame(imp_data)
+head(imp_data, n = 10L)
+str(imp_data)
+```
+
+---
+
+# Plot the sensor data of each parameter with strokes as line graphs
+```{r}
+# Split the data into the individual 4 samples.
+sp <- split(imp_data, imp_data[["Sample"]])
+str(sp)
+
+# Select parameters to plot.
+y_var <- c("Force", "Friction", "Rel.Depth", "Velocity")
+
+# Create axes labels with units.
+param.labs <- c("Force [N]", "Friction [N]", "Relative depth [mm]", "Velocity [mm/s]")
+names(param.labs) <- y_var
+
+# Plot
+for (i in seq_along(sp)) {
+  # Create a sequence of every 40th stroke per sample that includes the first and the last strokes.
+  seq_st <- seq(1, length(unique(sp[[i]][["Stroke"]])), by = 40) %>% 
+            c(max(unique(sp[[i]][["Stroke"]])))
+  
+  # Create a subset of every 40th stroke and a subset of the first 50 strokes per sample.
+  dat_i_40th <- filter(sp[[i]], Stroke %in% seq_st)
+  dat_i_50 <- filter(sp[[i]], Stroke %in% 1:50)
+  
+  # Pivot to longer format for facet plots.
+  data_long_40th <- select(dat_i_40th, all_of(c("Rel.Position", y_var, "Stroke"))) %>%
+                    pivot_longer(all_of(y_var), names_to = "parameter", values_to = "value")
+  str(data_long_40th)
+  data_long_50 <- select(dat_i_50, all_of(c("Rel.Position", y_var, "Stroke"))) %>%
+                  pivot_longer(all_of(y_var), names_to = "parameter", values_to = "value") 
+  str(data_long_50)
+  
+  # Plot every 40th stroke.
+  p1 <- ggplot(data = data_long_40th, aes(x = Rel.Position, y = value, color = Stroke)) +
+        geom_line(aes(group = Stroke), alpha = 0.3) + 
+        
+        # Wrap around parameters with free y-scales.
+        facet_wrap(~ parameter, scales = "free_y", ncol = 1, labeller = labeller(parameter = param.labs)) +
+        labs(x = "Distance [mm]", y = NULL) +
+        
+        # Reverse the legend starting with 0 going to 2000 strokes.
+        # Use the viridis color scale.
+        scale_color_viridis(trans = "reverse") + 
+        
+        # Change the 'Distance [mm]' in the x-legend.
+        scale_x_continuous(breaks = c(0, 35, 70, 105, 140)) +
+        theme_minimal()
+  
+  # Plot only the first 50 strokes per sample.
+  p2 <- ggplot(data = data_long_50, aes(x = Rel.Position, y = value, color = Stroke)) +
+        geom_line(aes(group = Stroke), alpha = 0.3) + 
+        facet_wrap(~ parameter, scales = "free_y", ncol = 1, labeller = labeller(parameter = param.labs)) +
+        labs(x = "Distance [mm]", y = NULL) +
+        scale_color_viridis(trans = "reverse") + 
+        scale_x_continuous(breaks = c(0, 35, 70, 105, 140)) +
+        theme_minimal()
+
+  # Patchwork the plots.
+  p <- p2 + p1 + plot_annotation(title = names(sp)[i]) 
+  print(p)
+  
+  # Save the plot as a PDF.
+  file_out <- paste0(file_path_sans_ext(basename(data_file)), "_plot_", names(sp)[i], ".pdf") %>%
+              gsub("b_", "d_", .)
+  ggsave(filename = file_out, plot = p, path = dir_out, device = "pdf")
+} 
+```
+
+---
+
+# Descriptive statistics
+## Create functions to compute the statistics in bulk
+```{r Function}
+# n, min, max, mean, median and sd
+NMinMaxMeanMedSd <- function(x){
+  y <- x[!is.na(x)]     # Exclude NAs
+  n_test <- length(y)   # Sample size (n)
+  min_test <- min(y)    # Minimum
+  max_test <- max(y)    # Maximum
+  mean_test <- mean(y)  # Mean
+  med_test <- median(y) # Median
+  sd_test <- sd(y)      # Standard deviation
+  out <- c(n_test, min_test, max_test, mean_test, med_test, sd_test) # Concatenate
+  names(out) <- c("n", "min", "max", "mean", "median", "sd")         # Name values
+  return(out)                                                        # Object to return
+}
+
+# n and number of distinct values
+N.distinct <- function(x){
+  y <- x[!is.na(x)]                # Exclude NAs
+  n_test <- length(y)              # Sample size (n)
+  unique_test <- length(unique(y)) # Number of unique values
+  out <- c(n_test, unique_test)    # Concatenate
+  names(out) <- c("n", "distinct") # Name values
+  return(out)                      # Object to return
+}
+```
+
+## Summary statistics
+```{r}
+# For all parameters
+all_stats <- summaryBy(.~ Sample, data = imp_data[c(y_var, "Sample")], FUN = NMinMaxMeanMedSd)
+all_stats
+
+# For stroke
+stroke_stats <- summaryBy(.~ Sample, data = imp_data[c("Stroke", "Sample")], FUN = N.distinct)
+stroke_stats
+```
+
+## Export statistics
+Export to XLSX with two sheets
+```{r}
+write.xlsx(list(Stroke = stroke_stats, Parameters = all_stats), 
+           file = paste0(dir_out, "/descriptivestats_smarttester_stepmm.xlsx"))
+```
+
+---
+
+# sessionInfo()
+```{r}
+sessionInfo()
+```
+
+
+---
+
+
+# Cite R packages used
+```{r, echo = FALSE}
+cite_packages(pkgs = pack_to_load, output = "paragraph", include.RStudio = TRUE, out.dir = "c_script")
+```
+
+
+## References
