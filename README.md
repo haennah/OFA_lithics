@@ -26,5 +26,19 @@ References in the script and in the bibliography file grateful-refs.bib were gen
 
 The remaining data objects (d, e) including OFA- and ZENConnect projects are available on zenodo: 10.5281/zenodo.7930863
 
+## d_OFA_projects
+
+Folder containing the OFA projects for all four sample sets; named accordingly.
+The OFA software can be downloaded using the following link: https://www.ifgeo.uni-bonn.de/en/ifg_homepage/departments/paleontology/labs/vertebraten/ehemalige-forschergruppen/for-771/ofa/download.
+Each OFA project contains 3D models of one tool sample and a contact material. 
+The 3D models were generated with the AICON smartScan-HE R8 structured light scanner and the OptoCat (2020R2) software and edited in GOMInspect (ZEISS) which is accessible with the following link: https://www.gom.com/en/products/zeiss-quality-suite/gom-inspect-pro.
+A READme in the folder gives an overview of the individual project settings.
+
+## e_ZENConnect_projects
+
+ZENConnect (ZEISS) projects (A5PROJ) of the surface images of each side of each tool sample. Projects are named accordingly.
+Projects were created with the ZENdesk3 3.5 (blue edition) (ZEISS) software which can be accessed with the following link: https://www.zeiss.com/microscopy/en/products/software/zeiss-zen-desk.html.
+Folders corresponding to each ZENConnect project containing all images of the project. 
+Overview EDF images were acquired and processed with a digital microscope (ZEISS Smartzoom 5). High magnification (5x or more) images were acquired with the upright light microscope component of a laser-scanning microscope from ZEISS (AxioImager.72 Vario).
 
 *** End of README ***
