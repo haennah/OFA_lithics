@@ -207,7 +207,7 @@ p3 <- ggplot(data_40th_all, aes(x = Rel.Position, y = Rel.Depth, color = Stroke)
 plot(p3)
 
 # Save the plot as a PDF.
-file_out <- paste0(file_path_sans_ext(basename(data_file)), "_plot_", names(sp)[i], ".pdf") %>%
+file_out <- paste0(file_path_sans_ext(basename(data_file)), "_depthplot_", names(sp)[i], ".pdf") %>%
             gsub("b_", "d_", .)
 ggsave(filename = file_out, plot = p3, path = dir_out, device = "pdf")
 ```
